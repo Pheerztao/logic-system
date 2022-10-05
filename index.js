@@ -1,7 +1,7 @@
 require(`dotenv`).config();
 const express = require(`express`)
 const app = express()
-const joi = require(`joy`);
+const Joi = require(`joi`);
 const mysql = require(`mysql2`); 
 const bodyParser = require(`body-parser`);
 //const Connection = require("mysql2/typings/mysql/lib/Connection");
@@ -40,8 +40,19 @@ app.post(`/create`, (req,res) => {
   email: Joi.string().email({minDomainSegments: 2, tlds:{allow: [`com`,  `net`] } }),
   age: Joi.string().min(1).max(3)
 })
+const { error, value } = schema.validate(req.body);
 
+  if(error != "undefined"){
+
+    res.status(400).send({
+        message: 'validation error'
+    })
+  }
+
+if()
 })
+
+
 
 //  if(!firstname||!lastname||!phone||!email||!age){
 //   res.status(400).send({
