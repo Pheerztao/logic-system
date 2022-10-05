@@ -4,6 +4,7 @@ const app = express()
 const Joi = require(`joi`);
 const mysql = require(`mysql2`); 
 const bodyParser = require(`body-parser`);
+const { v4: uuidv4 } = require('uuid');
 //const Connection = require("mysql2/typings/mysql/lib/Connection");
 const port = 7000
 
@@ -34,7 +35,7 @@ app.post(`/create`, (req,res) => {
  const email = req.body.email
  const age = req.body.age
 
- 
+
  const schema = Joi.object({
   firstname: Joi.string().min(4).max(30),
   surnmame:  Joi.string().min(4).max(30).required(),
@@ -72,8 +73,8 @@ const { error, value } = schema.validate(req.body);
 
    //create the customer 
    connection.query(
-   `insert into customers(customer_id,firstname, othernames, phone, email)
-  values('${uuidv5()}','${firstname}','${othername}','${phone}', '${email}',${age} )`,
+   `insert into customers(customer_id,firstname, lastname, phone, email, age)
+  values('${uuidv4()}','${firstname}','${lastname}','${phone}', '${email}',${age} )`,
         (err, results, fields) => {
          if (err) {
             console.log("2: error: ", err)
